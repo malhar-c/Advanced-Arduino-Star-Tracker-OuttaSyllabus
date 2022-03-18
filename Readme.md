@@ -1,8 +1,11 @@
 # DIY Advanced Star Tracker with Arduino and NEMA 17 (A4988)
 
 > ***Author:** Malhar Chakraborty (OuttaSyllabus)*
+
 > ***Date:** 18/03/2022*
+
 > ***Started Advanced version:** Oct 2021 (See the Release notes)*
+
 > ***Started Barn door tracker Arduino project:** *Dec 2020* [GitHub Link](https://github.com/malhar-c/Star-Tracker-ver.-11.x.x)*
 > ________
 > **Features:**
@@ -55,17 +58,20 @@
 
 > **Note:** To this PVC pipe the motor and threaded rod mechanism will be attached such that it will swivel as the barn door opens with time.
 
-4. Threaded rod (1mm pitch 5mm dia) `any dimensions will work just remember we have to couple this to the saft of NEMA 17 and we need to know the pitch precisely because based on that only the tracking algorithm will work.`
+4. Threaded rod (1mm pitch 5mm dia) `any dimensions will work just remember we have to couple this to the shaft of NEMA 17 and we need to know the pitch precisely because based on that only the tracking algorithm will work.`
 5. Tee nut and washers.
-6. NEMA 17 clamp `we have to attach the NEMA 17 to one of those PVC pipes so pick a Clamp which will work in this situation, I've jsut used a L bracket as nothing was aviable except of that. For more details watch the YT video @OuttaSyllabus`
+6. NEMA 17 clamp `we have to attach the NEMA 17 to one of those PVC pipes so pick a Clamp which will work in this situation, I've just used a L bracket as nothing was available except of that. For more details watch the YT video @OuttaSyllabus`
 7. NEMA 17 Shaft coupler.
 8. Ball Head with suitable mounting hardware (to mount the ball had on top of the plank which will hold the camera).
-9. Extra tripod quick release plate `You probably can skip this. I ordered one extra QR plate and permanently attached it to the barn door with two part resin epoxy adhesive (or whatever it's called, I've used Araldite) as my tracker was quite heavy and I though it would be more secure with this approach, you just need some sort of arrangement to mounth it on top of a tripod without any wiggle room.`
+9. Extra tripod quick release plate `You probably can skip this. I ordered one extra QR plate and permanently attached it to the barn door with two part resin epoxy adhesive (or whatever it's called, I've used Araldite) as my tracker was quite heavy and I though it would be more secure with this approach, you just need some sort of arrangement to mount it on top of a tripod without any wiggle room.`
 
 ### Electronics/Controls housing
 
-> 3D Printed enclosure, printed in ABS+ (The A4988 heats up easily to around 50C without proper cooling, the ABS can survive upto 80-90 deg C direct contact with the heatsink, thus enough headroom.)
->
+> 3D Printed enclosure, printed in ABS+ (The A4988 heats up easily to around 50C without proper cooling, the ABS can survive up to 80-90 deg C direct contact with the heatsink, thus enough headroom.)
+
+![](images/enclosure_base.png)
+
+![](images/enclosure_lid.png)
 
 ## Exact components used (Links):
 
