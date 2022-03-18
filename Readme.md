@@ -51,6 +51,7 @@ ________
 
 ### Tracking and mounting
 > Link(s) I followed for construction:
+>
 > [Swivel mount design](https://www.nutsvolts.com/magazine/article/january2015_Wierenga)
 >
 > [f/138 – Daniel Berrangé](https://fstop138.berrange.com/2014/01/building-an-barn-door-mount-part-1-arduino-stepper-motor-control/)
