@@ -33,6 +33,13 @@
 
 > **Note:** I've used a diode as temperature sensor as I ran out of thermistors and I was rushing to finish the initial prototype, it worked and I left it as it is, probably have to replace in future, as it's not as accurate and it depends on a ref voltage, which surprisingly in my case varies when I use the external power source, and when I use USB to power the Arduino only (it's not usable when used with USB as temp readings are incorrect).
 
+## Mechanical construction and Hardware:
+
+### Barndoor construction
+
+ - Ply wood planks (around 11 inches) x2 `Note: I've used some lying around pieces of ply woods, any hardwood should work as long as you can work with it... xD`
+ - Hinges with low play x2 (2 inches)
+
 ## Exact components used (Links):
 
  1. Arduino: [Nano CH340 Chip Board without USB cable compatible with Arduino (Soldered)](https://robu.in/product/arduino-nano-board-r3-with-ch340-chip-wo-usb-cable-solderedarduino-nano-r3-wo-usb-cable-soldered/)
@@ -46,3 +53,5 @@
  9. KA7805 : [KA7805 Linear Voltage Regulator (Pack of 3 Ics)](https://robu.in/product/ka7805-linear-voltage-regulator-pack-of-3-ics/)
  10. 3s BMS: [3 Series 20A 18650 Lithium Battery Protection Board 11.1V 12V 12.6V](https://robu.in/product/3-series-20a-18650-lithium-battery-protection-board-11-1v-12v-12-6v/)
  11. Capacitive touch sensor: [Digital Sensor TTP223B Module Capacitive Touch Switch](https://robu.in/product/digital-sensor-ttp223b-module-capacitive-touch-switch/)
+
+## Pin configurations
