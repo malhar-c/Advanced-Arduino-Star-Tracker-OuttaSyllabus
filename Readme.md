@@ -1,11 +1,48 @@
 # DIY Advanced Star Tracker with Arduino and NEMA 17 (A4988)
 
-***Author:** Malhar Chakraborty (OuttaSyllabus)*
+> ***Author:** Malhar Chakraborty (OuttaSyllabus)*
+> ***Date:** 18/03/2022*
+> ***Started Advanced version:** 10/02.2021*
+> ***Started Barn door tracker Arduino project:** *Dec 2020* [GitHub Link](https://github.com/malhar-c/Star-Tracker-ver.-11.x.x)*
+> ________
+> **Features:**
+>  - 0 Manual mechanical operation.
+>  - Auto calibration after startup and end of track using limit switches this results in higher total track time by using the whole
+> length of the threaded rod.
+>  - Auto correct tangent error overtime (using variable speed stepper drive) calculation is done using length from the hinge to threaded rod
+> and the pitch of the threaded rod used.
+>  - Low noise operation (using 16th micro-stepping)
+>  - Non-blocking stepper driving using timer interrupts (library)
+>  - Lots of customization options for future.
 
-**Electronics:**
+
+## Electronics:
 
  1. Arduino Nano
  2. A4988 Stepper Driver
  3. NEMA 17 Stepper (1.8 step angle) Motor
  4. 4x4 Matrix Membrane keypad with I2c module (LCD backpack)
  5. 1602 LCD with I2c backpack
+ 6. Analog Temperature sensors (thermistors)
+ 7. Fan (12V)
+ 8. MOSFET (IRFP150 or any n-channel mosfet will work) for Fan control
+ 9. KA7805 (5v Voltage regulator for Arduino voltage supply)
+ 10. Power source: 18650 Li ion cells (3s) with 3s BMS
+ 11. Capacitive Touch sensor for shake free operation of the tracker. `Note: this didn't work for me as everytime the modules stop working for some reason, but would be a very nice addition.`
+
+
+> **Note:** I've used a diode as temperature sensor as I ran out of thermistors and I was rushing to finish the initial prototype, it worked and I left it as it is, probably have to replace in future, as it's not as accurate and it depends on a ref voltage, which surprisingly in my case varies when I use the external power source, and when I use USB to power the Arduino only (it's not usable when used with USB as temp readings are incorrect).
+
+## Exact components used (Links):
+
+ 1. Arduino: [Nano CH340 Chip Board without USB cable compatible with Arduino (Soldered)](https://robu.in/product/arduino-nano-board-r3-with-ch340-chip-wo-usb-cable-solderedarduino-nano-r3-wo-usb-cable-soldered/)
+ 2. A4988: [A4988 driver Stepper Motor Driver- Good Quality](https://robu.in/product/a4988-driver-stepper-motor-driver/)
+ 3. Stepper Motor shaft coupler: [Aluminum Flexible Shaft Coupling 5mm x 5mm](https://robu.in/product/aluminium-flexible-shaft-coupling-5mm-x-5mm/)
+ 4. 4x4 Membrane keypad: [# 4?4 Matrix Keypad Membrane Switch for Arduino, ARM and other MCU](https://robu.in/product/4x4-matrix-keypad-membrane-switch-arduino-arm-mcu/)
+ 5. 1602 LCD : [LCD1602 Parallel LCD Display Yellow Backlight](https://robu.in/product/serial-lcd1602-iic-i2c-yellow-backlight/)
+ 6. I2c backpack : [IIC/I2C Serial Interface Adapter Module](https://robu.in/product/iici2c-serial-interface-adapter-module/)
+ 7. Analog Temperature sensors (thermistors) : [Analog Temperature Sensor Module](https://robu.in/product/analog-temperature-module/)
+ 8. Fan (12V) : [12V 3010 Cooling Fan for 3D Printer](https://robu.in/product/12v-3010-cooling-fan-for-3d-printer/)
+ 9. KA7805 : [KA7805 Linear Voltage Regulator (Pack of 3 Ics)](https://robu.in/product/ka7805-linear-voltage-regulator-pack-of-3-ics/)
+ 10. 3s BMS: [3 Series 20A 18650 Lithium Battery Protection Board 11.1V 12V 12.6V](https://robu.in/product/3-series-20a-18650-lithium-battery-protection-board-11-1v-12v-12-6v/)
+ 11. Capacitive touch sensor: [Digital Sensor TTP223B Module Capacitive Touch Switch](https://robu.in/product/digital-sensor-ttp223b-module-capacitive-touch-switch/)
