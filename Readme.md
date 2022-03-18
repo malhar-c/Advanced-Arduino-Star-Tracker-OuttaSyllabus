@@ -1,3 +1,4 @@
+
 # DIY Advanced Star Tracker with Arduino and NEMA 17 (A4988)
 
 > ***Author:** Malhar Chakraborty (OuttaSyllabus)*
@@ -7,7 +8,8 @@
 > ***Started Advanced version:** Oct 2021 (See the Release notes)*
 
 > ***Started Barn door tracker Arduino project:** *Dec 2020* [GitHub Link](https://github.com/malhar-c/Star-Tracker-ver.-11.x.x)*
-> ________
+
+________
 > **Features:**
 >  - 0 Manual mechanical operation.
 >  - Auto calibration after startup and end of track using limit switches this results in higher total track time by using the whole
@@ -50,7 +52,9 @@
 ### Tracking and mounting
 > Link(s) I followed for construction:
 > [Swivel mount design](https://www.nutsvolts.com/magazine/article/january2015_Wierenga)
+>
 > [f/138 – Daniel Berrangé](https://fstop138.berrange.com/2014/01/building-an-barn-door-mount-part-1-arduino-stepper-motor-control/)
+>
 > [Barn door tracker Calculator](https://blarg.co.uk/astronomy/barn-door-tracker-calculator)
 
 1. PVC pipes cut to the breadth of the planks (1 inch dia) x2
@@ -69,9 +73,9 @@
 
 > 3D Printed enclosure, printed in ABS+ (The A4988 heats up easily to around 50C without proper cooling, the ABS can survive up to 80-90 deg C direct contact with the heatsink, thus enough headroom.)
 
-![](images/enclosure_base.png)
+![](https://raw.githubusercontent.com/malhar-c/Advanced-Arduino-Star-Tracker-OuttaSyllabus/master/Images/enclosure_base.PNG)
 
-![](images/enclosure_lid.png)
+![](https://raw.githubusercontent.com/malhar-c/Advanced-Arduino-Star-Tracker-OuttaSyllabus/master/Images/enclosure_lid.PNG)
 
 ## Exact components used (Links):
 
