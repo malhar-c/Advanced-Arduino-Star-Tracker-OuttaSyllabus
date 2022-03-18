@@ -10,7 +10,7 @@
 #include "A4988-stepperDriver.h"
 #include <util/delay.h>
 
-#define max_steps 999999 //25000
+#define max_steps 12500 //25000
 
 //siderial tracking calculations [all in mm and minutes]
 #define SIDEREAL_DAY_MINUTES      1436.06818333  //1436.06818333 minutes
