@@ -192,7 +192,7 @@ static volatile uint8_t sregSave;
 uint8_t A4988_isNotBusy(void);
 void A4988_isBusy(void);
 void A4988_stepperSetup(void);
-void A4988_stepMicroseconds(uint16_t nr_of_steps, uint16_t delay_between_steps_us);
+void A4988_stepMicroseconds(uint16_t nr_of_steps, uint32_t delay_between_steps_us);
 void A4988_stepMilliseconds(uint16_t nr_of_steps, uint32_t delay_between_steps_ms);
 #if USE_DIRECTION_PIN == 1
 void A4988_stepperDirection(uint8_t direction);
@@ -321,7 +321,7 @@ void A4988_stepperIncreaseSpeed(uint8_t speed){
 }
 #endif
 
-void A4988_stepMicroseconds(uint16_t nr_of_steps, uint16_t delay_between_steps_us){
+void A4988_stepMicroseconds(uint16_t nr_of_steps, uint32_t delay_between_steps_us){
 	microTime = 1;
 	A4988_stepMilliseconds(nr_of_steps, delay_between_steps_us);
 }
@@ -598,7 +598,7 @@ void A4988_stepperRotateNTimes(uint16_t nr_of_rotations, uint16_t total_duration
 }
 
 #if USE_stepperRotateToDegree == 1
-void A4988_stepperRotateToDegree(float degree, uint16_t delay_between_steps_us){
+void A4988_stepperRotateToDegree(float degree, uint32_t delay_between_steps_us){
 	microTime = 1;
 	useMicrosteppingGlobalVar = 0;
 	#if USE_ACCELERATION == 1
