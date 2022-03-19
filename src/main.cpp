@@ -931,11 +931,11 @@ short cal_sidereal(int track_sidereal_runtime)
   short delay_steps_ms = 0;
   float Corrected_radius = 0;
   float Speed_in_RPM = 0;
-  Serial.print("Siderial RUNTIME: ");
-  Serial.print(track_sidereal_runtime);
+  // Serial.print("Siderial RUNTIME: ");
+  // Serial.print(track_sidereal_runtime);
   theta = (((float)track_sidereal_runtime)/3600) * (PI/12); //for max 1 hour
-  Serial.print(" Theta: ");
-  Serial.print(theta, 4);
+  // Serial.print(" Theta: ");
+  // Serial.print(theta, 4);
   psi = (PI - theta)/2;
   // Serial.print(" PSI: ");
   // Serial.print(psi, 4);
@@ -943,12 +943,12 @@ short cal_sidereal(int track_sidereal_runtime)
   // Serial.print(" Correction: ");
   // Serial.print(correction, 2);
   Corrected_radius = BASE_RADIUS_AT_0_DEG - correction;  //tangent error corrected bradius
-  Serial.print(" Corrected R: ");
-  Serial.print(Corrected_radius);
+  // Serial.print(" Corrected R: ");
+  // Serial.print(Corrected_radius);
   Speed_in_RPM = Corrected_radius * ((2*PI)/SIDEREAL_DAY_MINUTES) * THREAD_PITCH;
   delay_steps_ms = Speed_in_RPM*300;
-  Serial.print(" RPM : ");
-  Serial.print(Speed_in_RPM);
+  // Serial.print(" RPM : ");
+  // Serial.print(Speed_in_RPM);
   return (delay_steps_ms);
 }
 
