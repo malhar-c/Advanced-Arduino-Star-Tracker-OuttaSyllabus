@@ -86,7 +86,6 @@ short fan_speed = 0;
 unsigned long curr_temp_disp_millis = 0;
 unsigned long prev_temp_disp_millis = 0;
 short temp_disp_state = 0;
-bool feedback_sound = true;
 unsigned long curr_millis = 0;
 unsigned long prev_millis = 0;
 bool fan_auto_on = 0;
@@ -643,16 +642,6 @@ void update_everything()
   update_limit_switches();
   update_temp();
   Touch_pad_refresh();
-  if(feedback_sound)
-  {
-    lcd.setCursor(0, 0);
-    lcd.write(0);
-  }
-  else
-  {
-    lcd.setCursor(0, 0);
-    lcd.print(" ");
-  }
 }
 
 void manual_mode()
