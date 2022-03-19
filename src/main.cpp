@@ -216,7 +216,7 @@ void loop()
   switch(customKey)
   {
     case 'B':
-    track_init:
+    track_init: //for the touch control to directly trigger track
     Serial.println("inside case B");
     //delay(1000);
     lcd.clear();
@@ -224,7 +224,7 @@ void loop()
     lcd.print("B. Start Track");
     lcd.setCursor(0,1);
     lcd.print("*. Back");
-    delay(1000);
+    // delay(1000);
     Touch_pad_refresh();
     customKey = customKeypad.getKey();
     while(customKey != 'B' || customKey != '*')
@@ -698,7 +698,7 @@ void manual_mode()
       lcd.setCursor(0, 1);
       lcd.print("#. Resm");
       lcd.print(" *. Cancl");
-      delay(500);
+      // delay(500);
       do
       {
         customKey = customKeypad.getKey();
@@ -811,7 +811,7 @@ void Track()
       lcd.setCursor(0, 1);
       lcd.print("#. Resm");
       lcd.print(" *. Cancl");
-      delay(500);
+      // delay(500);
       Touch_pad_refresh();
       customKey = customKeypad.getKey();
       do
@@ -853,8 +853,8 @@ void Track()
     //run motor to open plank
     A4988_stepperDirection(TURN_RIGHT);
     A4988_stepMilliseconds(1, delay_bet_steps_ms);
-    Serial.print(" DELAY BETWEEN Steps: ");
-    Serial.println(delay_bet_steps_ms);
+    // Serial.print(" DELAY BETWEEN Steps: ");
+    // Serial.println(delay_bet_steps_ms);
     A4988_isBusy();
     StepCount+=1;
 
