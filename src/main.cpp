@@ -216,7 +216,7 @@ void loop()
   switch(customKey)
   {
     case 'B':
-    track_init:
+    track_init: //for the touch control to directly trigger track
     Serial.println("inside case B");
     //delay(1000);
     lcd.clear();
@@ -224,7 +224,7 @@ void loop()
     lcd.print("B. Start Track");
     lcd.setCursor(0,1);
     lcd.print("*. Back");
-    delay(1000);
+    // delay(1000);
     Touch_pad_refresh();
     customKey = customKeypad.getKey();
     while(customKey != 'B' || customKey != '*')
@@ -698,7 +698,7 @@ void manual_mode()
       lcd.setCursor(0, 1);
       lcd.print("#. Resm");
       lcd.print(" *. Cancl");
-      delay(500);
+      // delay(500);
       do
       {
         customKey = customKeypad.getKey();
@@ -811,7 +811,7 @@ void Track()
       lcd.setCursor(0, 1);
       lcd.print("#. Resm");
       lcd.print(" *. Cancl");
-      delay(500);
+      // delay(500);
       Touch_pad_refresh();
       customKey = customKeypad.getKey();
       do
@@ -853,8 +853,8 @@ void Track()
     //run motor to open plank
     A4988_stepperDirection(TURN_RIGHT);
     A4988_stepMilliseconds(1, delay_bet_steps_ms);
-    Serial.print(" DELAY BETWEEN Steps: ");
-    Serial.println(delay_bet_steps_ms);
+    // Serial.print(" DELAY BETWEEN Steps: ");
+    // Serial.println(delay_bet_steps_ms);
     A4988_isBusy();
     StepCount+=1;
 
@@ -931,11 +931,11 @@ short cal_sidereal(int track_sidereal_runtime)
   short delay_steps_ms = 0;
   float Corrected_radius = 0;
   float Speed_in_RPM = 0;
-  Serial.print("Siderial RUNTIME: ");
-  Serial.print(track_sidereal_runtime);
+  // Serial.print("Siderial RUNTIME: ");
+  // Serial.print(track_sidereal_runtime);
   theta = (((float)track_sidereal_runtime)/3600) * (PI/12); //for max 1 hour
-  Serial.print(" Theta: ");
-  Serial.print(theta, 4);
+  // Serial.print(" Theta: ");
+  // Serial.print(theta, 4);
   psi = (PI - theta)/2;
   // Serial.print(" PSI: ");
   // Serial.print(psi, 4);
@@ -943,12 +943,12 @@ short cal_sidereal(int track_sidereal_runtime)
   // Serial.print(" Correction: ");
   // Serial.print(correction, 2);
   Corrected_radius = BASE_RADIUS_AT_0_DEG - correction;  //tangent error corrected bradius
-  Serial.print(" Corrected R: ");
-  Serial.print(Corrected_radius);
+  // Serial.print(" Corrected R: ");
+  // Serial.print(Corrected_radius);
   Speed_in_RPM = Corrected_radius * ((2*PI)/SIDEREAL_DAY_MINUTES) * THREAD_PITCH;
   delay_steps_ms = Speed_in_RPM*300;
-  Serial.print(" RPM : ");
-  Serial.print(Speed_in_RPM);
+  // Serial.print(" RPM : ");
+  // Serial.print(Speed_in_RPM);
   return (delay_steps_ms);
 }
 
