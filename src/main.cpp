@@ -302,15 +302,14 @@ void loop()
     {
       fan_man_flag = true;
       fan_speed = 100;
+      lcd.print("Fan: Man");
     }
     else
     {
       fan_man_flag = false;
       fan_speed = 0;
+      lcd.print("Fan: Auto");
     }
-    lcd.print(" Fan Speed: ");
-    lcd.print(fan_speed);
-    lcd.print("%");
     lcd.setCursor(0,1);
     temp_display();
     break;
@@ -326,9 +325,9 @@ void loop()
       fan_man_flag = false;
       fan_speed = 0;
     }
-    lcd.print(" Fan Speed: ");
+    lcd.print("Fan: Man (");
     lcd.print(fan_speed);
-    lcd.print("%");
+    lcd.print("%)");
     lcd.setCursor(0,1);
     temp_display();
     break;
@@ -343,9 +342,9 @@ void loop()
     {
       fan_speed = 100;
     }
-    lcd.print(" Fan Speed: ");
+    lcd.print(" Fan: Man (");
     lcd.print(fan_speed);
-    lcd.print("%");
+    lcd.print("%)");
     lcd.setCursor(0,1);
     temp_display();
     break;
