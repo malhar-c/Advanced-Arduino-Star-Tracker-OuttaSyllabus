@@ -86,7 +86,6 @@ short fan_speed = 0;
 unsigned long curr_temp_disp_millis = 0;
 unsigned long prev_temp_disp_millis = 0;
 short temp_disp_state = 0;
-bool feedback_sound = true;
 unsigned long curr_millis = 0;
 unsigned long prev_millis = 0;
 bool fan_auto_on = 0;
@@ -112,26 +111,6 @@ void ready_text();
 void temp_display();
 void Track_text();
 void turn_on_backlight();
-byte Speaker[] = {
-  B00001,
-  B00011,
-  B01111,
-  B01111,
-  B01111,
-  B00011,
-  B00001,
-  B00000
-};
-byte Sound[] = {
-  B00001,
-  B00011,
-  B00101,
-  B01001,
-  B01001,
-  B01011,
-  B11011,
-  B11000
-};
 
 
 //temp control functions
@@ -150,7 +129,7 @@ void runfan(int);
 void temp_Fan_speed_control();
 void Full_cycle();
 
-short cal_sidereal(int);     //all the sidereal tracking calculations will be done here
+unsigned long cal_sidereal(int);     //all the sidereal tracking calculations will be done here
 float stepCount_to_seconds(long);
 
 void setup()
@@ -165,9 +144,6 @@ void setup()
 
   Wire.begin();
   lcd.init();
-
-  lcd.createChar(0, Speaker);
-  lcd.createChar(1, Sound);
 
   //show on the LCD
   starting_text();
@@ -302,15 +278,14 @@ void loop()
     {
       fan_man_flag = true;
       fan_speed = 100;
+      lcd.print("Fan: Man");
     }
     else
     {
       fan_man_flag = false;
       fan_speed = 0;
+      lcd.print("Fan: Auto");
     }
-    lcd.print(" Fan Speed: ");
-    lcd.print(fan_speed);
-    lcd.print("%");
     lcd.setCursor(0,1);
     temp_display();
     break;
@@ -326,9 +301,9 @@ void loop()
       fan_man_flag = false;
       fan_speed = 0;
     }
-    lcd.print(" Fan Speed: ");
+    lcd.print("Fan: Man (");
     lcd.print(fan_speed);
-    lcd.print("%");
+    lcd.print("%)");
     lcd.setCursor(0,1);
     temp_display();
     break;
@@ -343,9 +318,9 @@ void loop()
     {
       fan_speed = 100;
     }
-    lcd.print(" Fan Speed: ");
+    lcd.print(" Fan: Man (");
     lcd.print(fan_speed);
-    lcd.print("%");
+    lcd.print("%)");
     lcd.setCursor(0,1);
     temp_display();
     break;
@@ -644,16 +619,6 @@ void update_everything()
   update_limit_switches();
   update_temp();
   Touch_pad_refresh();
-  if(feedback_sound)
-  {
-    lcd.setCursor(0, 0);
-    lcd.write(0);
-  }
-  else
-  {
-    lcd.setCursor(0, 0);
-    lcd.print(" ");
-  }
 }
 
 void manual_mode()
@@ -848,13 +813,14 @@ void Track()
       }
     }
 
-    short delay_bet_steps_ms = cal_sidereal(sidereal_time);
+    unsigned long delay_bet_steps_us = cal_sidereal(sidereal_time);
     A4988_stepperWakeUp();
     //run motor to open plank
     A4988_stepperDirection(TURN_RIGHT);
-    A4988_stepMilliseconds(1, delay_bet_steps_ms);
-    // Serial.print(" DELAY BETWEEN Steps: ");
-    // Serial.println(delay_bet_steps_ms);
+    // A4988_stepMilliseconds(1, delay_bet_steps_ms);
+    A4988_stepMicroseconds(1, delay_bet_steps_us);
+    Serial.print(" DELAY BETWEEN Steps: ");
+    Serial.println(delay_bet_steps_us);
     A4988_isBusy();
     StepCount+=1;
 
@@ -926,35 +892,38 @@ void runfan(int speed)
 }
 
 //Function for Siderial tracking calculations
-short cal_sidereal(int track_sidereal_runtime)
+unsigned long cal_sidereal(int track_sidereal_runtime)
 {
-  short delay_steps_ms = 0;
+  // short delay_steps_ms = 0;
+  unsigned long delay_steps_us = 0; //changing the delay between steps calculation to us
   float Corrected_radius = 0;
   float Speed_in_RPM = 0;
-  // Serial.print("Siderial RUNTIME: ");
-  // Serial.print(track_sidereal_runtime);
+  Serial.print("Siderial RUNTIME: ");
+  Serial.print(track_sidereal_runtime);
   theta = (((float)track_sidereal_runtime)/3600) * (PI/12); //for max 1 hour
-  // Serial.print(" Theta: ");
-  // Serial.print(theta, 4);
+  Serial.print(" Theta: ");
+  Serial.print(theta, 4);
   psi = (PI - theta)/2;
-  // Serial.print(" PSI: ");
-  // Serial.print(psi, 4);
+  Serial.print(" PSI: ");
+  Serial.print(psi, 4);
   correction = SWIVEL_MOUNT_DISTANCE * tan((PI/2)-psi);
-  // Serial.print(" Correction: ");
-  // Serial.print(correction, 2);
+  Serial.print(" Correction: ");
+  Serial.print(correction, 2);
   Corrected_radius = BASE_RADIUS_AT_0_DEG - correction;  //tangent error corrected bradius
-  // Serial.print(" Corrected R: ");
-  // Serial.print(Corrected_radius);
+  Serial.print(" Corrected R: ");
+  Serial.print(Corrected_radius);
   Speed_in_RPM = Corrected_radius * ((2*PI)/SIDEREAL_DAY_MINUTES) * THREAD_PITCH;
-  delay_steps_ms = Speed_in_RPM*300;
-  // Serial.print(" RPM : ");
-  // Serial.print(Speed_in_RPM);
-  return (delay_steps_ms);
+  delay_steps_us = Speed_in_RPM*300000;
+  Serial.print(" RPM : ");
+  Serial.print(Speed_in_RPM);
+  Serial.print(" ");
+  Serial.print(delay_steps_us);
+  return (delay_steps_us);
 }
 
 float stepCount_to_seconds(long steps)
 {
-  int rotations = steps/200;
+  float rotations = steps/200;
   float angle_rad = atan((float)rotations/BASE_RADIUS_AT_0_DEG);
   float angle_deg = angle_rad * (180/PI);
   float seconds = 240 * (angle_deg);
