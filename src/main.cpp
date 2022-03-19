@@ -111,26 +111,6 @@ void ready_text();
 void temp_display();
 void Track_text();
 void turn_on_backlight();
-byte Speaker[] = {
-  B00001,
-  B00011,
-  B01111,
-  B01111,
-  B01111,
-  B00011,
-  B00001,
-  B00000
-};
-byte Sound[] = {
-  B00001,
-  B00011,
-  B00101,
-  B01001,
-  B01001,
-  B01011,
-  B11011,
-  B11000
-};
 
 
 //temp control functions
@@ -164,9 +144,6 @@ void setup()
 
   Wire.begin();
   lcd.init();
-
-  lcd.createChar(0, Speaker);
-  lcd.createChar(1, Sound);
 
   //show on the LCD
   starting_text();
