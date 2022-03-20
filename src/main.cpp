@@ -794,6 +794,7 @@ void Track()
         {
           lcd.clear();
           LCD_backlight_flag = false;
+          arduino_runtime_millis = millis();
           break;
         }
         else if (customKey == '*')
