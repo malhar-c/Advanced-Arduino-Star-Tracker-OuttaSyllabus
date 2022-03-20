@@ -786,6 +786,7 @@ void Track()
           LCD_backlight_flag = false;
           arduino_runtime_millis = millis();
           track_runtime = stepCount_to_seconds(StepCount);
+          lcd.print("Sid'eal Tracking");
           break;
         }
         else if (customKey == '*')
