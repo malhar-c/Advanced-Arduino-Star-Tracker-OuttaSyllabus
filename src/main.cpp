@@ -804,8 +804,8 @@ void Track()
       }
     }
 
-    //Correcting the tangent error every 100 steps
-    if(StepCount%10 == 0)// || delay_bet_steps_us == 0)
+    //Correcting the tangent error every 100 steps or half rotation
+    if(StepCount%100 == 0)// || delay_bet_steps_us == 0)
     {
       //calculate the steps
       delay_bet_steps_us = cal_sidereal(sidereal_time);
