@@ -93,6 +93,7 @@ unsigned long arduino_runtime_millis = 0;
 float solar_time = 0;
 float sidereal_time = 0;
 const float sidereal_conv = 1.0/0.99726958;
+unsigned long delay_bet_steps_us = 0;
 
 
 //siderial tracking variables
@@ -369,7 +370,7 @@ void loop()
 void Full_cycle()
 {
   lcd.clear();
-  temp_display();
+  lcd.print("Going up! ZoooO!");
   temp_Fan_speed_control();
   runfan(fan_speed);
   update_everything();
@@ -389,10 +390,15 @@ void Full_cycle()
   }while(up_lim_flag != 1 && StepCount < max_steps);
   A4988_isBusy();
   A4988_stepperSleep();
-  lcd.setCursor(1, 0);
+  lcd.clear();
   lcd.print("Total: ");
   lcd.print(StepCount);
-  _delay_ms(10000);
+  lcd.setCursor(0,1);
+  for(int i=0; i<16; ++i)
+  {
+    lcd.print(".");
+    _delay_ms(250);
+  }
   calib_flag = false;
 }
 
@@ -444,34 +450,18 @@ void ready_text()
 void temp_display()
 {
   update_temp();
-  curr_temp_disp_millis = millis();
-
-  if(curr_temp_disp_millis - prev_temp_disp_millis >= 3000) //3000 msec timeout
-  {
-    prev_temp_disp_millis = curr_temp_disp_millis;
-
-    //state 0 - display A4998 temp
-    //state 1 - display KA7805 temp
-    if(temp_disp_state == 0)
-    {
-      temp_disp_state = 1;
-      lcd.setCursor(0, 1);
-      lcd.print(" KA7805 - ");
-      lcd.print(int(t));
-      lcd.print(" ");
-      lcd.print((char)223);
-      lcd.print("C");
-    }
-    else
-    {
-      temp_disp_state = 0;
-      lcd.setCursor(0, 1);
-      lcd.print("  A4988 - ");
-      lcd.print(int(Tc));
-      lcd.print((char)223);
-      lcd.print("C ");
-    }
-  }
+  lcd.setCursor(0, 1);
+  lcd.print("R-");
+  lcd.print(int(t));
+  // lcd.print(" ");
+  lcd.print((char)223);
+  lcd.print(" ");
+  lcd.print("D-");
+  lcd.print(int(Tc));
+  lcd.print((char)223);
+  lcd.print(" ");
+  lcd.print(fan_speed);
+  lcd.print("%");
 }
 
 
@@ -748,15 +738,15 @@ void Track()
     lcd.print(".");
   }
   lcd.setCursor(0, 1);
-  lcd.print("Remain': ~ ");
-  lcd.print(55 - (int)(track_runtime/60));
-  lcd.print("min");
-  _delay_ms(2000);
+  // lcd.print("Remain': ~ ");
+  // lcd.print(55 - (int)(track_runtime/60));
+  // lcd.print("min");
+  // _delay_ms(2000);
   //delay(500);
   LCD_backlight_flag = false;
-  temp_display();
-  lcd.clear();
-  Serial.println("track triggered");
+  // temp_display();
+  // lcd.clear();
+  // Serial.println("track triggered");
   //tracking do
   do
   {
@@ -764,7 +754,7 @@ void Track()
     sidereal_time = solar_time * sidereal_conv;
     update_everything();
     // Track_text();
-    temp_display();
+    // temp_display();
     temp_Fan_speed_control();
     runfan(fan_speed);
     //update_limit_switches();
@@ -795,6 +785,8 @@ void Track()
           lcd.clear();
           LCD_backlight_flag = false;
           arduino_runtime_millis = millis();
+          track_runtime = stepCount_to_seconds(StepCount);
+          lcd.print("Sid'eal Tracking");
           break;
         }
         else if (customKey == '*')
@@ -818,14 +810,25 @@ void Track()
       }
     }
 
-    unsigned long delay_bet_steps_us = cal_sidereal(sidereal_time);
+    //Correcting the tangent error every 100 steps or half rotation
+    if(StepCount%100 == 0)// || delay_bet_steps_us == 0)
+    {
+      //calculate the steps
+      delay_bet_steps_us = cal_sidereal(sidereal_time);
+      lcd.setCursor(0, 0);
+      lcd.print("Remain': ~ ");
+      lcd.print(55 - (int)(sidereal_time/60));
+      lcd.print("min");
+      temp_display();
+    }
     A4988_stepperWakeUp();
     //run motor to open plank
     A4988_stepperDirection(TURN_RIGHT);
     // A4988_stepMilliseconds(1, delay_bet_steps_ms);
     A4988_stepMicroseconds(1, delay_bet_steps_us);
-    // Serial.print(" DELAY BETWEEN Steps: ");
-    // Serial.println(delay_bet_steps_us);
+    Serial.println(StepCount);
+    Serial.print(" DELAY BETWEEN Steps: ");
+    Serial.println(delay_bet_steps_us);
     A4988_isBusy();
     StepCount+=1;
 
@@ -928,8 +931,8 @@ unsigned long cal_sidereal(int track_sidereal_runtime)
 
 float stepCount_to_seconds(long steps)
 {
-  float rotations = steps/200;
-  float angle_rad = atan((float)rotations/BASE_RADIUS_AT_0_DEG);
+  float rotations = (float)steps/200;
+  float angle_rad = atan(rotations/BASE_RADIUS_AT_0_DEG);
   float angle_deg = angle_rad * (180/PI);
   float seconds = 240 * (angle_deg);
   // Serial.println(angle_rad, 6);
