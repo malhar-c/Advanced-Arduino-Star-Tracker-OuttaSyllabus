@@ -434,12 +434,12 @@ void ready_text()
   lcd.print("READY!");
 }
 
-void Track_text()
-{
-  lcd.setCursor(1, 0);
-  lcd.print("Tracking ");
-  lcd.print(StepCount);
-}
+// void Track_text()
+// {
+//   lcd.setCursor(1, 0);
+//   lcd.print("Tracking ");
+//   lcd.print(StepCount);
+// }
 
 void temp_display()
 {
@@ -739,15 +739,19 @@ void Track()
   // Serial.println(track_runtime);
   track_flag = false;
   lcd.clear();
-  lcd.print("Tracking Init");
+  lcd.print("Sid'eal Init");
   lcd.noBlink();
   LCD_backlight_flag = true;
-  delay(1000);
   for(int i=0; i<4; i++)
   {
-    delay(250);
+    _delay_ms(250);
     lcd.print(".");
   }
+  lcd.setCursor(0, 1);
+  lcd.print("Remain': ~ ");
+  lcd.print(55 - (int)(track_runtime/60));
+  lcd.print("min");
+  _delay_ms(2000);
   //delay(500);
   LCD_backlight_flag = false;
   temp_display();
@@ -759,7 +763,7 @@ void Track()
     solar_time = (float(millis() - arduino_runtime_millis)/1000) + track_runtime;
     sidereal_time = solar_time * sidereal_conv;
     update_everything();
-    Track_text();
+    // Track_text();
     temp_display();
     temp_Fan_speed_control();
     runfan(fan_speed);
@@ -790,6 +794,7 @@ void Track()
         {
           lcd.clear();
           LCD_backlight_flag = false;
+          arduino_runtime_millis = millis();
           break;
         }
         else if (customKey == '*')
@@ -819,8 +824,8 @@ void Track()
     A4988_stepperDirection(TURN_RIGHT);
     // A4988_stepMilliseconds(1, delay_bet_steps_ms);
     A4988_stepMicroseconds(1, delay_bet_steps_us);
-    Serial.print(" DELAY BETWEEN Steps: ");
-    Serial.println(delay_bet_steps_us);
+    // Serial.print(" DELAY BETWEEN Steps: ");
+    // Serial.println(delay_bet_steps_us);
     A4988_isBusy();
     StepCount+=1;
 
@@ -898,26 +903,26 @@ unsigned long cal_sidereal(int track_sidereal_runtime)
   unsigned long delay_steps_us = 0; //changing the delay between steps calculation to us
   float Corrected_radius = 0;
   float Speed_in_RPM = 0;
-  Serial.print("Siderial RUNTIME: ");
-  Serial.print(track_sidereal_runtime);
+  // Serial.print("Siderial RUNTIME: ");
+  // Serial.print(track_sidereal_runtime);
   theta = (((float)track_sidereal_runtime)/3600) * (PI/12); //for max 1 hour
-  Serial.print(" Theta: ");
-  Serial.print(theta, 4);
+  // Serial.print(" Theta: ");
+  // Serial.print(theta, 4);
   psi = (PI - theta)/2;
-  Serial.print(" PSI: ");
-  Serial.print(psi, 4);
+  // Serial.print(" PSI: ");
+  // Serial.print(psi, 4);
   correction = SWIVEL_MOUNT_DISTANCE * tan((PI/2)-psi);
-  Serial.print(" Correction: ");
-  Serial.print(correction, 2);
+  // Serial.print(" Correction: ");
+  // Serial.print(correction, 2);
   Corrected_radius = BASE_RADIUS_AT_0_DEG - correction;  //tangent error corrected bradius
-  Serial.print(" Corrected R: ");
-  Serial.print(Corrected_radius);
+  // Serial.print(" Corrected R: ");
+  // Serial.print(Corrected_radius);
   Speed_in_RPM = Corrected_radius * ((2*PI)/SIDEREAL_DAY_MINUTES) * THREAD_PITCH;
   delay_steps_us = Speed_in_RPM*300000;
-  Serial.print(" RPM : ");
-  Serial.print(Speed_in_RPM);
-  Serial.print(" ");
-  Serial.print(delay_steps_us);
+  // Serial.print(" RPM : ");
+  // Serial.print(Speed_in_RPM);
+  // Serial.print(" ");
+  // Serial.print(delay_steps_us);
   return (delay_steps_us);
 }
 
