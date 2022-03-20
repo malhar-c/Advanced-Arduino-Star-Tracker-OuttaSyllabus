@@ -370,7 +370,7 @@ void loop()
 void Full_cycle()
 {
   lcd.clear();
-  temp_display();
+  lcd.print("Going up! ZoooO!");
   temp_Fan_speed_control();
   runfan(fan_speed);
   update_everything();
@@ -390,10 +390,15 @@ void Full_cycle()
   }while(up_lim_flag != 1 && StepCount < max_steps);
   A4988_isBusy();
   A4988_stepperSleep();
-  lcd.setCursor(1, 0);
+  lcd.clear();
   lcd.print("Total: ");
   lcd.print(StepCount);
-  _delay_ms(10000);
+  lcd.setCursor(0,1);
+  for(int i=0; i<16; ++i)
+  {
+    lcd.print(".");
+    _delay_ms(250);
+  }
   calib_flag = false;
 }
 
