@@ -434,12 +434,12 @@ void ready_text()
   lcd.print("READY!");
 }
 
-void Track_text()
-{
-  lcd.setCursor(1, 0);
-  lcd.print("Tracking ");
-  lcd.print(StepCount);
-}
+// void Track_text()
+// {
+//   lcd.setCursor(1, 0);
+//   lcd.print("Tracking ");
+//   lcd.print(StepCount);
+// }
 
 void temp_display()
 {
@@ -748,10 +748,10 @@ void Track()
     lcd.print(".");
   }
   lcd.setCursor(0, 1);
-  lcd.print("Remain: ~");
+  lcd.print("Remain': ~ ");
   lcd.print(55 - (int)(track_runtime/60));
   lcd.print("min");
-  _delay_ms(1000);
+  _delay_ms(2000);
   //delay(500);
   LCD_backlight_flag = false;
   temp_display();
@@ -763,7 +763,7 @@ void Track()
     solar_time = (float(millis() - arduino_runtime_millis)/1000) + track_runtime;
     sidereal_time = solar_time * sidereal_conv;
     update_everything();
-    Track_text();
+    // Track_text();
     temp_display();
     temp_Fan_speed_control();
     runfan(fan_speed);
