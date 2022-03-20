@@ -446,14 +446,17 @@ void temp_display()
 {
   update_temp();
   lcd.setCursor(0, 1);
-  lcd.print("R- ");
+  lcd.print("R-");
   lcd.print(int(t));
   // lcd.print(" ");
   lcd.print((char)223);
-  //lcd.print("C");
-  lcd.print("D- ");
+  lcd.print(" ");
+  lcd.print("D-");
   lcd.print(int(Tc));
   lcd.print((char)223);
+  lcd.print(" ");
+  lcd.print(fan_speed);
+  lcd.print("%");
 }
 
 
